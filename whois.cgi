@@ -23,7 +23,7 @@ print $query->end_form;
 $dom = $query->param('dom');
 
 $Net::Whois::Raw::OMIT_MSG = 1;
-if ( $dom ne "" ) {
+if ( defined $dom ) {
 	print "<PRE>";
 	print whois($dom) . "<BR>\n";
 	print "</PRE>";
