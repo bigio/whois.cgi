@@ -7,20 +7,20 @@ use CGI qw(:standard);
 use Net::Whois::Raw;
 
 my $dom;
-my $query = new CGI;
+my $cg = new CGI;
 
 # Print correct headers
-print $query->header("text/html");
-print $query->start_html("Who is ?");
-print $query->start_form(-method=>"POST",
+print $cg->header("text/html");
+print $cg->start_html("Who is ?");
+print $cg->start_form(-method=>"POST",
 			-action=>"whois.cgi");
-print $query->textfield(-name=>"dom");
-print $query->submit(-name=>"whois",
+print $cg->textfield(-name=>"dom");
+print $cg->submit(-name=>"whois",
 		    -value=>"Who is ?");
-print $query->end_form;
+print $cg->end_form;
 
 # Read POST parameters
-$dom = $query->param('dom');
+$dom = $cg->param('dom');
 
 $Net::Whois::Raw::OMIT_MSG = 1;
 if ( defined $dom ) {
@@ -31,4 +31,4 @@ if ( defined $dom ) {
 	print "Please specify a domain name\n";
 }
 
-print $query->end_html;
+print $cg->end_html;
