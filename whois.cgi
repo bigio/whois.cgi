@@ -11,7 +11,8 @@ my $cg = new CGI;
 
 # Print correct headers
 print $cg->header("text/html");
-print $cg->start_html("Who is ?");
+print $cg->start_html(-title => "Who is ?",
+			-style=>{'src'=>'style.css'});
 print $cg->start_form(-method=>"POST",
 			-action=>"whois.cgi");
 print $cg->textfield(-name=>"dom");
@@ -28,7 +29,7 @@ if ( defined $dom ) {
 	print whois($dom) . "<BR>\n";
 	print "</PRE>";
 } else {
-	print "Please specify a domain name\n";
+	print "Cerca il dominio\n";
 }
 
 print $cg->end_html;
