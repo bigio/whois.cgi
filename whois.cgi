@@ -31,31 +31,24 @@ use warnings;
 
 use CGI qw(:standard);
 use Net::Whois::Raw;
+use Template;
 
 my $dom;
 my $cg = new CGI;
+my $tt = Template->new;
 
 # Print correct headers
 print $cg->header("text/html");
-print $cg->start_html(-title => "Who is ?",
-			-style=>{'src'=>'style.css'});
-print $cg->start_form(-method=>"POST",
-			-action=>"whois.cgi");
-print $cg->textfield(-name=>"dom");
-print $cg->submit(-name=>"whois",
-		    -value=>"Who is ?");
-print $cg->end_form;
+$tt->process('tpl/header.tt') or die $tt->error;
 
 # Read POST parameters
 $dom = $cg->param('dom');
 
 $Net::Whois::Raw::OMIT_MSG = 1;
 if ( defined $dom ) {
-	print "<PRE>";
-	print whois($dom) . "<BR>\n";
-	print "</PRE>";
-} else {
-	print "Cerca il dominio\n";
+	print "<pre>";
+	print whois($dom) . "<br>\n";
+	print "</pre>";
 }
 
-print $cg->end_html;
+$tt->process('tpl/footer.tt') or die $tt->error;
