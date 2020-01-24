@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 #------------------------------------------------------------------------------
-# Copyright (c) 2013,2016, Giovanni Bechis
+# Copyright (c) 2013,2020, Giovanni Bechis
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,14 +32,15 @@ use warnings;
 use CGI qw(:standard);
 use Net::Whois::Raw;
 use Template;
+use File::Basename;
 
 my $dom;
 my $cg = new CGI;
-my $tt = Template->new;
+my $tt = Template->new(ABSOLUTE => 1);
 
 # Print correct headers
 print $cg->header("text/html");
-$tt->process('tpl/header.tt') or die $tt->error;
+$tt->process(dirname( __FILE__ ) . '/tpl/header.tt') or die $tt->error;
 
 # Read POST parameters
 $dom = $cg->param('dom');
@@ -51,4 +52,4 @@ if ( defined $dom ) {
 	print "</pre>";
 }
 
-$tt->process('tpl/footer.tt') or die $tt->error;
+$tt->process(dirname( __FILE__ ) . '/tpl/footer.tt') or die $tt->error;
